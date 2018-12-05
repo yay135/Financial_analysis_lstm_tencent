@@ -205,38 +205,45 @@ def init_spider(keyword):
 
 
 # change the keyword you want to use here
-keyword='苹果'
-driver = init_spider(keyword)
-time.sleep(2)
-WebDriverWait(driver,10,0.5).until(exp.element_to_be_clickable((By.XPATH,"/html/body/div[1]/div[2]/div[2]/div/div[2]/div[1]/div[3]/div[1]/div[2]/div/canvas")))
-canvas = driver.find_element_by_xpath("/html/body/div[1]/div[2]/div[2]/div/div[2]/div[1]/div[3]/div[1]/div[2]/div/canvas")
-ActionChains(driver).move_to_element_with_offset(canvas,1244,376).click().perform()
-mIter = 0
-data = []
-while mIter<24:
-    WebDriverWait(driver, 10, 0.5).until(exp.element_to_be_clickable(
-        (By.XPATH, "/html/body/div[1]/div[2]/div[2]/div/div[2]/div[1]/div[3]/div[1]/div[1]/div/div[1]/canvas")))
-    time.sleep(1)
-    dIter = 0
-    while dIter<30:
-        if dIter == 0:
-            ActionChains(driver).move_to_element_with_offset(canvas,1253,241).perform()
-            time.sleep(1)
-        else:
-            ActionChains(driver).move_by_offset(-43,0).perform()
-        element = driver.find_element_by_xpath("/html/body/div[1]/div[2]/div[2]/div/div[2]/div[1]/div[3]/div[1]/div[1]/div")
-        Str = element.text
-        data.append(element.text)
-        print(data[-1])
+keywords = ['王者荣耀','微信','英雄联盟','qq']
+Set = set()
+for key in keywords:
+    Set.clear()
+    driver = init_spider(key)
+    time.sleep(2)
+    WebDriverWait(driver,10,0.5).until(exp.element_to_be_clickable((By.XPATH,"/html/body/div[1]/div[2]/div[2]/div/div[2]/div[1]/div[3]/div[1]/div[2]/div/canvas")))
+    canvas = driver.find_element_by_xpath("/html/body/div[1]/div[2]/div[2]/div/div[2]/div[1]/div[3]/div[1]/div[2]/div/canvas")
+    ActionChains(driver).move_to_element_with_offset(canvas,1244,376).click().perform()
+    mIter = 0
+    data = []
+    while mIter<50:
+        WebDriverWait(driver, 10, 0.5).until(exp.element_to_be_clickable(
+            (By.XPATH, "/html/body/div[1]/div[2]/div[2]/div/div[2]/div[1]/div[3]/div[1]/div[1]/div/div[1]/canvas")))
+        time.sleep(1)
+        dIter = 0
+        while dIter<30:
+            if dIter == 0:
+                ActionChains(driver).move_to_element_with_offset(canvas,1253,241).perform()
+                time.sleep(1)
+            else:
+                ActionChains(driver).move_by_offset(-43,0).perform()
+            element = driver.find_element_by_xpath("/html/body/div[1]/div[2]/div[2]/div/div[2]/div[1]/div[3]/div[1]/div[1]/div")
+            Str = element.text
+            raw = Str.split()
+            if len(raw)>=4 and raw[0] not in Set:
+                p = []
+                p.append(raw[0])
+                p.append(raw[-1])
+                print(p)
+                data.append(p)
+                Set.add(raw[0])
+            dIter += 1
 
-        dIter += 1
+        ActionChains(driver).move_to_element_with_offset(canvas, 1244 - (mIter+1)*12, 376).click().perform()
+        time.sleep(1)
 
-    ActionChains(driver).move_to_element_with_offset(canvas, 1244 - (mIter+1)*16, 376).click().perform()
-    time.sleep(1)
+        mIter += 1
 
-    mIter += 1
-
-with open('scrapyData.csv','x') as datafile:
-    writer = csv.writer(datafile, delimiter=",",quotechar = '"',quoting=csv.QUOTE_MINIMAL)
-    for da in data:
-        writer.write([da])
+    with open('scrapyData_{c}.txt'.format(c=key),'w') as datafile:
+        for da in data:
+            datafile.write('{a} {b}\n'.format(a=da[0],b=da[-1]))
