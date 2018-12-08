@@ -4,7 +4,6 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as exp
 import time
-import csv
 
 def init_spider(keyword):
     url = 'http://index.baidu.com/'
@@ -205,7 +204,7 @@ def init_spider(keyword):
 
 
 # change the keyword you want to use here
-keywords = ['王者荣耀','微信','英雄联盟','qq']
+keywords = ['王者荣耀','微信','英雄联盟']
 Set = set()
 for key in keywords:
     Set.clear()
@@ -213,7 +212,7 @@ for key in keywords:
     time.sleep(2)
     WebDriverWait(driver,10,0.5).until(exp.element_to_be_clickable((By.XPATH,"/html/body/div[1]/div[2]/div[2]/div/div[2]/div[1]/div[3]/div[1]/div[2]/div/canvas")))
     canvas = driver.find_element_by_xpath("/html/body/div[1]/div[2]/div[2]/div/div[2]/div[1]/div[3]/div[1]/div[2]/div/canvas")
-    ActionChains(driver).move_to_element_with_offset(canvas,1244,376).click().perform()
+    ActionChains(driver).move_to_element_with_offset(canvas,1189,376).click().perform()
     mIter = 0
     data = []
     while mIter<50:
@@ -223,10 +222,11 @@ for key in keywords:
         dIter = 0
         while dIter<30:
             if dIter == 0:
-                ActionChains(driver).move_to_element_with_offset(canvas,1253,241).perform()
+                ActionChains(driver).move_to_element_with_offset(canvas,1196,174).perform()
                 time.sleep(1)
             else:
-                ActionChains(driver).move_by_offset(-43,0).perform()
+                ActionChains(driver).move_by_offset(-42,0).perform()
+                time.sleep(0.1)
             element = driver.find_element_by_xpath("/html/body/div[1]/div[2]/div[2]/div/div[2]/div[1]/div[3]/div[1]/div[1]/div")
             Str = element.text
             raw = Str.split()
@@ -239,7 +239,7 @@ for key in keywords:
                 Set.add(raw[0])
             dIter += 1
 
-        ActionChains(driver).move_to_element_with_offset(canvas, 1244 - (mIter+1)*12, 376).click().perform()
+        ActionChains(driver).move_to_element_with_offset(canvas, 1189 - (mIter+1)*10, 376).click().perform()
         time.sleep(1)
 
         mIter += 1
