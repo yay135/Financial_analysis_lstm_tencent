@@ -1,3 +1,8 @@
+"""
+Author Fengyao Yan/University of South Carolina
+All Rights Reserved
+"""
+
 import dateparser as parser
 import pandas as pd
 

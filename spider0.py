@@ -1,3 +1,8 @@
+"""
+Author Fengyao Yan/University of South Carolina
+All Rights Reserved
+"""
+
 from selenium import webdriver
 from selenium.webdriver import ActionChains
 from selenium.webdriver.common.by import By
