@@ -1,0 +1,5 @@
+history:30
+lstm:(5, 15, 1)
+linear1:(15, 7)
+linear2:(10, 7)
+avg mse:2.277064574286995

@@ -1,3 +1,7 @@
+"""
+Author Fengyao Yan/University of South Carolina
+All Rights Reserved
+"""
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
