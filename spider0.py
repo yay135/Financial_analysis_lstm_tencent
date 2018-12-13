@@ -71,7 +71,7 @@ for key in keywords:
                 Set.add(raw[0])
             dIter += 1
 
-        ActionChains(driver).move_to_element_with_offset(canvas, 1189 - (mIter+1)*10, 376).click().perform()
+        ActionChains(driver).move_to_element_with_offset(canvas, 1244 - (mIter+1)*11, 376).click().perform()
         time.sleep(1)
 
         mIter += 1
